@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-# McAfee Sitelist.xml password decryption tool
-# Jerome Nokin (@funoverip) - Feb 2016
+# Info: 
+#    McAfee Sitelist.xml password decryption tool
+#    Jerome Nokin (@funoverip) - Feb 2016
+#    More info on https://funoverip.net/2016/02/mcafee-sitelist-xml-password-decryption/
 #
-# Search for the XML element <Password Encrypted="1">...</Password>,
-# and paste the content as argument.
+# Quick howto: 
+#    Search for the XML element <Password Encrypted="1">...</Password>,
+#    and paste the content as argument.
 #
 ###########################################################################
 
