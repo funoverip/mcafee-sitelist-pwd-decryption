@@ -15,17 +15,11 @@ import base64
 from Crypto.Cipher import DES3
 from Crypto.Hash import SHA
 
+# hardcoded XOR key
+KEY = "12150F10111C1A060A1F1B1817160519".decode("hex")
+
 def sitelist_xor(xs):
-    # hardcoded XOR key 
-    key = "12150F10111C1A060A1F1B1817160519".decode("hex")
-    j = 0
-    output=''
-    for i in range(0,len(xs)):
-        output += chr(ord(xs[i]) ^ ord(key[j]))
-        j+=1
-        if j%16 == 0:
-            j=0
-    return output
+    return ''.join(chr(ord(c) ^ ord(KEY[i%16]))for i, c in enumerate(xs))
 
 def des3_ecb_decrypt(data):
     # hardcoded 3DES key
@@ -34,17 +28,14 @@ def des3_ecb_decrypt(data):
     des3 = DES3.new(key, DES3.MODE_ECB, "\x00\x00\x00\x00\x00\x00\x00\x00")
     decrypted = des3.decrypt(data)
     # quick hack to ignore padding
-    decrypted = decrypted[0:decrypted.find('\x00')]
-    if len(decrypted) == 0:
-        decrypted = "<empty>"
-    return decrypted
+    return decrypted[0:decrypted.find('\x00')] or "<empty>"
 
 
 if __name__ == "__main__":
 
     if len(sys.argv) != 2:
-        print "Usage:   %s <base64 passwd>" % sys.argv[0]
-        print "Example: %s 'jWbTyS7BL1Hj7PkO5Di/QhhYmcGj5cOoZ2OkDTrFXsR/abAFPM9B3Q=='" % sys.argv[0]
+        print("Usage:   %s <base64 passwd>" % sys.argv[0])
+        print("Example: %s 'jWbTyS7BL1Hj7PkO5Di/QhhYmcGj5cOoZ2OkDTrFXsR/abAFPM9B3Q=='" % sys.argv[0])
         sys.exit(0)
 
     # read arg
@@ -52,7 +43,7 @@ if __name__ == "__main__":
     # decrypt
     password = des3_ecb_decrypt(sitelist_xor(encrypted_password))
     # print out
-    print "Crypted password   : %s" % sys.argv[1]
-    print "Decrypted password : %s" % password
+    print("Crypted password   : %s" % sys.argv[1])
+    print("Decrypted password : %s" % password)
 
     sys.exit(0)
