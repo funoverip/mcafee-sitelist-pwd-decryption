@@ -11,7 +11,7 @@
 - https://github.com/tfairane/HackStory/blob/master/McAfeePrivesc.md
 - https://www.syss.de/fileadmin/dokumente/Publikationen/2011/SySS_2011_Deeg_Privilege_Escalation_via_Antivirus_Software.pdf
 
-### Exemple usage:
+### Example usage:
 
 ```
 ./mcafee_sitelist_pwd_decrypt.py jWbTyS7BL1Hj7PkO5Di/QhhYmcGj5cOoZ2OkDTrFXsR/abAFPM9B3Q==
