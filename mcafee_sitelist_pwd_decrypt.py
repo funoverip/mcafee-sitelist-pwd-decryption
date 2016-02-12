@@ -25,7 +25,7 @@ def des3_ecb_decrypt(data):
     # hardcoded 3DES key
     key = SHA.new(b'<!@#$%^>').digest() + "\x00\x00\x00\x00"
     # decrypt
-    des3 = DES3.new(key, DES3.MODE_ECB, "\x00\x00\x00\x00\x00\x00\x00\x00")
+    des3 = DES3.new(key, DES3.MODE_ECB, "")
     decrypted = des3.decrypt(data)
     # quick hack to ignore padding
     return decrypted[0:decrypted.find('\x00')] or "<empty>"
