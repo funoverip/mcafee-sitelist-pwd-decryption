@@ -1,4 +1,4 @@
-### Password decryption tool for the McAfee **SiteList.xml** file.
+### Python3 password decryption tool for the McAfee **SiteList.xml** file.
  
 - Author:  jerome.nokin@gmail.com
 - Blog:  http://funoverip.net
