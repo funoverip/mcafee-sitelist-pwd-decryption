@@ -17,13 +17,13 @@ from Crypto.Hash import SHA
 
 
 # hardcoded XOR key
-KEY = bytearray.fromhex("12150F10111C1A060A1F1B1817160519").decode('utf-8')
+KEY = bytearray.fromhex("12150F10111C1A060A1F1B1817160519").decode("utf-8")
 
 def sitelist_xor(xs):
     result = bytearray(0)
     for i, c in enumerate(xs):
         cb = c.to_bytes(1, byteorder='big')
-        result += (ord(cb) ^ ord(KEY[i%16])).to_bytes(1, byteorder='big')
+        result += (ord(cb) ^ ord(KEY[i%16])).to_bytes(1, byteorder="big")
     return result
 
 def des3_ecb_decrypt(data):
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     encrypted_password = base64.b64decode(bytes(sys.argv[1], "utf-8"))
     # decrypt
     passwdXOR = sitelist_xor(encrypted_password)
-    password = des3_ecb_decrypt(passwdXOR).decode('utf-8')
+    password = des3_ecb_decrypt(passwdXOR).decode("utf-8")
     # print out
     print("Crypted password   : %s" % sys.argv[1])
     print("Decrypted password : %s" % password)
