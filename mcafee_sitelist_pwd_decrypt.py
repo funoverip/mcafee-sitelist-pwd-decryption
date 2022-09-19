@@ -15,21 +15,25 @@ import base64
 from Crypto.Cipher import DES3
 from Crypto.Hash import SHA
 
+
 # hardcoded XOR key
-KEY = "12150F10111C1A060A1F1B1817160519".decode("hex")
+KEY = bytearray.fromhex("12150F10111C1A060A1F1B1817160519").decode("utf-8")
 
 def sitelist_xor(xs):
-    return ''.join(chr(ord(c) ^ ord(KEY[i%16]))for i, c in enumerate(xs))
+    result = bytearray(0)
+    for i, c in enumerate(xs):
+        cb = c.to_bytes(1, byteorder="big")
+        result += (ord(cb) ^ ord(KEY[i%16])).to_bytes(1, byteorder="big")
+    return result
 
 def des3_ecb_decrypt(data):
     # hardcoded 3DES key
-    key = SHA.new(b'<!@#$%^>').digest() + "\x00\x00\x00\x00"
+    key = SHA.new(b'<!@#$%^>').digest() + bytearray(4)
     # decrypt
-    des3 = DES3.new(key, DES3.MODE_ECB, "")
+    des3 = DES3.new(key, DES3.MODE_ECB)
+    data += bytearray(64 - (len(data) % 64))
     decrypted = des3.decrypt(data)
-    # quick hack to ignore padding
-    return decrypted[0:decrypted.find('\x00')] or "<empty>"
-
+    return decrypted[0:decrypted.find(0)] or "<empty>"
 
 if __name__ == "__main__":
 
@@ -39,9 +43,10 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # read arg
-    encrypted_password = base64.b64decode(sys.argv[1]) 
+    encrypted_password = base64.b64decode(bytes(sys.argv[1], "utf-8"))
     # decrypt
-    password = des3_ecb_decrypt(sitelist_xor(encrypted_password))
+    passwdXOR = sitelist_xor(encrypted_password)
+    password = des3_ecb_decrypt(passwdXOR).decode("utf-8")
     # print out
     print("Crypted password   : %s" % sys.argv[1])
     print("Decrypted password : %s" % password)
