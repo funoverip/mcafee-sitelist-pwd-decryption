@@ -12,8 +12,8 @@
 
 import sys
 import base64
-from Crypto.Cipher import DES3
-from Crypto.Hash import SHA
+from Cryptodome.Cipher import DES3
+from Cryptodome.Hash import SHA
 
 
 # hardcoded XOR key
