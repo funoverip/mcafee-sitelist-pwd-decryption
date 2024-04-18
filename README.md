@@ -14,6 +14,8 @@
 ### Example usage:
 
 ```
+# pip3 install pycryptodomex
+
 ./mcafee_sitelist_pwd_decrypt.py jWbTyS7BL1Hj7PkO5Di/QhhYmcGj5cOoZ2OkDTrFXsR/abAFPM9B3Q==
 Crypted password   : jWbTyS7BL1Hj7PkO5Di/QhhYmcGj5cOoZ2OkDTrFXsR/abAFPM9B3Q==
 Decrypted password : MyStrongPassword!
